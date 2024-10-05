@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS5 - Times Table</title>
+    <script type="text/javascript">
+        /**
+         * Function to generate and display the times table for a given number.
+         * @param {number} number - The number for which to generate the times table.
+         */
+        function timesTable(number) {
+            // Validate the input to ensure it's a number
+            if (isNaN(number)) {
+                document.getElementById("timesTableOutput").innerText = "Invalid input. Please enter a valid number.";
+                return;
+            }
+
+            let tableHTML = "<h2>Times Table for " + number + "</h2><ul>";
+
+            // Loop from 1 to 12 to create the times table
+            for (let i = 1; i <= 12; i++) {
+                let product = number * i;
+                tableHTML += "<li>" + number + " x " + i + " = " + product + "</li>";
+            }
+
+            tableHTML += "</ul>";
+
+            // Display the times table on the page
+            document.getElementById("timesTableOutput").innerHTML = tableHTML;
+        }
+
+        // Execute after the page has fully loaded
+        window.onload = function() {
+            // Prompt the user to enter a number for the times table
+            let userNumber = prompt("Enter a number to display its times table (1 to 12):");
+
+            // Convert the input to a number
+            userNumber = parseInt(userNumber);
+
+            // Call the timesTable function with the user's input
+            timesTable(userNumber);
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            padding: 5px 0;
+            font-size: 1.1em;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Times Table Generator</h1>
+    <div id="timesTableOutput">Loading times table...</div>
+</body>
+</html>
