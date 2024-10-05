@@ -1,45 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JS5 - Times Table</title>
-    <script type="text/javascript">
-        /**
-         * Function to generate and display the times table for a given number.
-         * @param {number} number - The number for which to generate the times table.
-         */
-        function timesTable(number) {
-            // Validate the input to ensure it's a number
-            if (isNaN(number)) {
-                document.getElementById("timesTableOutput").innerText = "Invalid input. Please enter a valid number.";
-                return;
-            }
-
-            let tableHTML = "<h2>Times Table for " + number + "</h2><ul>";
-
-            // Loop from 1 to 12 to create the times table
-            for (let i = 1; i <= 12; i++) {
-                let product = number * i;
-                tableHTML += "<li>" + number + " x " + i + " = " + product + "</li>";
-            }
-
-            tableHTML += "</ul>";
-
-            // Display the times table on the page
-            document.getElementById("timesTableOutput").innerHTML = tableHTML;
-        }
-
-        // Execute after the page has fully loaded
-        window.onload = function() {
-            // Prompt the user to enter a number for the times table
-            let userNumber = prompt("Enter a number to display its times table (1 to 12):");
-
-            // Convert the input to a number
-            userNumber = parseInt(userNumber);
-
-            // Call the timesTable function with the user's input
-            timesTable(userNumber);
-        };
-    </script>
+    <title>JS5 - Times Table Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,22 +10,94 @@
         h1 {
             color: #333;
         }
-        ul {
+        .times-table {
+            margin-bottom: 20px;
+        }
+        .times-table h2 {
+            color: #555;
+        }
+        .times-table ul {
             list-style-type: none;
             padding-left: 0;
         }
-        li {
-            padding: 5px 0;
-            font-size: 1.1em;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
+        .times-table li {
+            padding: 3px 0;
+            font-size: 1em;
         }
     </style>
+    <script type="text/javascript">
+        /**
+         * Function to generate and display the times table for a given number.
+         * @param {number} number - The number for which to generate the times table.
+         */
+        function timesTable(number) {
+            // Validate the input to ensure it's a number
+            if (isNaN(number)) {
+                // Create an error message element
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'times-table';
+                errorDiv.innerHTML = `<h2>Invalid input: "${number}" is not a number.</h2>`;
+                document.getElementById('timesTables').appendChild(errorDiv);
+                return;
+            }
+
+            // Create a container div for the times table
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'times-table';
+
+            // Create a heading for the times table
+            const heading = document.createElement('h2');
+            heading.textContent = `Times Table for ${number}`;
+            tableDiv.appendChild(heading);
+
+            // Create an unordered list to hold the times table entries
+            const list = document.createElement('ul');
+
+            // Generate the times table from 1 to 12
+            for (let i = 1; i <= 12; i++) {
+                const listItem = document.createElement('li');
+                const product = number * i;
+                listItem.textContent = `${number} x ${i} = ${product}`;
+                list.appendChild(listItem);
+            }
+
+            // Append the list to the container div
+            tableDiv.appendChild(list);
+
+            // Append the container div to the main timesTables div
+            document.getElementById('timesTables').appendChild(tableDiv);
+        }
+
+        /**
+         * Function to insert a horizontal line (<hr>) into the page.
+         */
+        function insertHorizontalLine() {
+            const hr = document.createElement('hr');
+            document.getElementById('timesTables').appendChild(hr);
+        }
+
+        // Execute after the page has fully loaded
+        window.onload = function() {
+            // Array of numbers for which to generate the times tables
+            const numbers = [3, 7, 11];
+
+            // Iterate through the numbers array
+            numbers.forEach((num, index) => {
+                // Call the timesTable function with the current number
+                timesTable(num);
+
+                // Insert <hr> after the first and second calls
+                if (index < numbers.length - 1) {
+                    insertHorizontalLine();
+                }
+            });
+        };
+    </script>
 </head>
 <body>
     <h1>Times Table Generator</h1>
-    <div id="timesTableOutput">Loading times table...</div>
+    <div id="timesTables">
+        <!-- Times tables will be inserted here -->
+    </div>
 </body>
 </html>
